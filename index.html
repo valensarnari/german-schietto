@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schietto - Listado de Sabores 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #D80032;
+            --dark-red: #800020;
+            --bg-cream: #FAF7F2;
+            --card-bg: #FFFFFF;
+            --text-main: #2B2B2B;
+            --text-muted: #666666;
+            --star-gold: #FFB800;
+            --border-light: #E0E0E0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        header {
+            background-color: var(--dark-red);
+            color: white;
+            text-align: center;
+            padding: 30px 20px 20px 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo-container {
+            margin-bottom: 15px;
+        }
+
+        .logo-container img {
+            max-width: 220px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .controls-wrapper {
+            position: sticky;
+            top: 0;
+            background-color: var(--bg-cream);
+            z-index: 100;
+            padding: 15px 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto 15px auto;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: 2px solid var(--border-light);
+            border-radius: 25px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary-red);
+            box-shadow: 0 0 8px rgba(216, 0, 50, 0.2);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .filter-btn {
+            background-color: white;
+            border: 1px solid var(--primary-red);
+            color: var(--primary-red);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary-red);
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .category-section {
+            margin-bottom: 40px;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            color: var(--dark-red);
+            border-bottom: 3px solid var(--primary-red);
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .flavors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .flavor-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            border: 1px solid #EAEAEA;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .flavor-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            padding-right: 10px;
+        }
+
+        .stars-container {
+            color: var(--star-gold);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .flavor-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            flex-grow: 1;
+        }
+
+        .badge-new {
+            display: inline-block;
+            background-color: var(--primary-red);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            margin-top: 10px;
+            align-self: flex-start;
+        }
+
+        footer {
+            background-color: var(--dark-red);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .cert-info {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+            .filter-btn {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
+            .flavors-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="Schietto Helados">
+        </div>
+        <h1>Listado de Sabores 2026</h1>
+        <p>Línea Premium de Cremas Heladas</p>
+    </header>
+
+    <div class="controls-wrapper">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Buscar sabor (ej: Nutella, Pistacho, Limón)..." onkeyup="filterFlavors()">
+        </div>
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterCategory('all')">Todos</button>
+            <button class="filter-btn" onclick="filterCategory('cremas')">Cremas</button>
+            <button class="filter-btn" onclick="filterCategory('chocolates')">Chocolates</button>
+            <button class="filter-btn" onclick="filterCategory('dulcedeleche')">Dulce de Leche</button>
+            <button class="filter-btn" onclick="filterCategory('frutales')">Frutales</button>
+            <button class="filter-btn" onclick="filterCategory('mousses')">Mousses</button>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- CREMAS -->
+        <section class="category-section" data-category="cremas">
+            <h2 class="category-title">Cremas</h2>
+            <div class="flavors-grid">
+                <div class="flavor-card" data-name="crema americana chantilly">
+                    <div class="card-header"><span class="flavor-name">Crema Americana o Chantilly</span><span class="stars-container">★★★</span></div>
+                    <p class="flavor-desc">Leche, azúcar, crema natural de leche a punto chantilly.</p>
+                </div>
+                <div class="flavor-card" data-name="crema vainilla">
+                    <div class="card-header"><span class="flavor-name">Crema Vainilla</span><span class="stars-container">★★★</span></div>
+                    <p class="flavor-desc">Leche, azúcar, crema, chaucha de vainilla para saborizar.</p>
+                </div>
+                <div class="flavor-card" data-name="granizado">
+                    <div class="card-header"><span class="flavor-name">Granizado</span><span class="stars-container">★★★</span></div>
+                    <p class="flavor-desc">Crema chantilly sembrada con trozos de chocolate semiamargo.</p>
+                </div>
+                <div class="flavor-card" data-name="banana split">
+                    <div class="card-header"><span class="flavor-name">Banana Split</span><span class="stars-container">★★★</span></div>
+                    <p class="flavor-desc">Crema de banana sembrada con dulce de leche repostero y trozos de chocolate semiamargo.</p>
+                </div>
+                <div class="flavor-card" data-name="frutilla a la crema">
+                    <div class="card-header"><span class="flavor-name">Frutilla a la Crema</span><span class="stars-container">★★★</span></div>
+                    <p class="flavor-desc">Crema sabor a frutilla sembrada con frutillas enteras y pulpa de frutilla.</p>
+                </div>
+                <div class="flavor-card" data-name="menta granizada">
+                    <div class="card-header"><span class="flavor-name">Menta Granizada</span><span class="stars-container">★★★</span></div>
+                    <p class="flavor-desc">Crema chantilly saborizada a la menta con trozos de chocolate semiamargo.</p>
+                </div>
+                <div class="flavor-card" data-name="crema franu">
+                    <div class="card-header"><span class="flavor-name">Crema Franu</span><span class="stars-container">★★★</span></div>
+                    <p class="flavor-desc">Crema chantilly con variegatto de frambuesas y trozos de frambuesas bañadas en chocolate blanco y chocolate con leche.</p>
+                    <span class="badge-new">NUEVO</span>
+                </div>
+                <div class="flavor-card" data-name="crema tramontana">
+                    <div class="card-header"><span class="flavor-name">Crema Tramontana</span><span class="stars-container">★★★</span></div>
+                    <p class="flavor-desc">Crema al chantilly sembrada con dulce de leche y microgalletitas cubiertas de chocolate.</p>
+                </div>
+                <div class="flavor-card" data-name="frutos del bosque">
+                    <div class="card-header"><span class="flavor-name">Frutos del Bosque</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Crema chantilly sembrada con frutos del bosque y pulpa.</p>
+                </div>
+                <div class="flavor-card" data-name="super sambayon">
+                    <div class="card-header"><span class="flavor-name">Super Sambayón</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Leche, azúcar, crema batida, yemas de huevo y vino marsala.</p>
+                </div>
+                <div class="flavor-card" data-name="crema flan">
+                    <div class="card-header"><span class="flavor-name">Crema Flan</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Crema vainilla al caramelo sembrada con dulce de leche.</p>
+                </div>
+                <div class="flavor-card" data-name="crema del cielo">
+                    <div class="card-header"><span class="flavor-name">Crema del Cielo</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Base de Crema Americana, aroma natural de fantasía y color celeste.</p>
+                </div>
+                <div class="flavor-card" data-name="cereza a la panna">
+                    <div class="card-header"><span class="flavor-name">Cereza a la Panna</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Crema con sabor a cereza sembrado con cerezas.</p>
+                </div>
+                <div class="flavor-card" data-name="cadbury">
+                    <div class="card-header"><span class="flavor-name">Cadbury</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Crema de yogurt de frutilla con trozos de chocolate semi-amargo.</p>
+                </div>
+                <div class="flavor-card" data-name="pistacho">
+                    <div class="card-header"><span class="flavor-name">Pistacho</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Crema helada a base pasta de pistachos tostados y triturados.</p>
+                </div>
+                <div class="flavor-card" data-name="mascarpone con frutillas">
+                    <div class="card-header"><span class="flavor-name">Mascarpone con Frutillas</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Crema chantilly con queso mascarpone sembrada con frutillas enteras y pulpa de frutillas.</p>
+                </div>
+                <div class="flavor-card" data-name="mantecol">
+                    <div class="card-header"><span class="flavor-name">Mantecol</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Crema con pasta de maní sembrada con trocitos de mantecol.</p>
+                </div>
+                <div class="flavor-card" data-name="tiramisu">
+                    <div class="card-header"><span class="flavor-name">Tiramisú</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Crema queso mascarpone con infusión de café sembrado con vainillas, y cacao amargo.</p>
+                </div>
+                <div class="flavor-card" data-name="cookies and cream oreo">
+                    <div class="card-header"><span class="flavor-name">Cookies and Cream</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Crema americana sembrada con dulce de leche y galletitas Oreo molidas.</p>
+                </div>
+                <div class="flavor-card" data-name="rodhesia">
+                    <div class="card-header"><span class="flavor-name">Rodhesia</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Crema helada con sabor a rodhesia sembrada con variegatto de chocolate y obleas.</p>
+                </div>
+                <div class="flavor-card" data-name="bananita helada">
+                    <div class="card-header"><span class="flavor-name">Bananita Helada</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Crema sabor a bananita dolca granizada con chocolate semi-amargo.</p>
+                </div>
+                <div class="flavor-card" data-name="arandanos">
+                    <div class="card-header"><span class="flavor-name">Arándanos</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Crema sabor a arándanos sembrada con pulpa y fruta seleccionada.</p>
+                </div>
+                <div class="flavor-card" data-name="crema bajonera nutella">
+                    <div class="card-header"><span class="flavor-name">Crema Bajonera</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Crema Chantilly sembrada con Nutella y chips de chocolate semi amargo.</p>
+                </div>
+                <div class="flavor-card" data-name="quinotos al whisky">
+                    <div class="card-header"><span class="flavor-name">Quinotos al Whisky</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Crema vainilla con kinotos triturados y licor al Whisky.</p>
+                </div>
+                <div class="flavor-card" data-name="coco con dulce">
+                    <div class="card-header"><span class="flavor-name">Coco c/ Dulce</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Crema chantilly con coco rallado sembrada con dulce de leche.</p>
+                </div>
+                <div class="flavor-card" data-name="crema rusa nuez">
+                    <div class="card-header"><span class="flavor-name">Crema Rusa</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Crema con pasta de nuez y nueces tostadas picadas.</p>
+                </div>
+                <div class="flavor-card" data-name="banana a la crema">
+                    <div class="card-header"><span class="flavor-name">Banana a la Crema</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Crema helada al chantilly con bananas licuadas.</p>
+                </div>
+                <div class="flavor-card" data-name="frutilla a la reina">
+                    <div class="card-header"><span class="flavor-name">Frutilla a la Reina</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Crema chantilly sembrada con frutillas enteras y pulpa de frutilla.</p>
+                </div>
+                <div class="flavor-card" data-name="postre de la abu">
+                    <div class="card-header"><span class="flavor-name">Postre de la Abu</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Mix bicolor de chocolate y vainilla sembrado con DDL natural y galletitas vainillas trozadas.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHOCOLATES -->
+        <section class="category-section" data-category="chocolates">
+            <h2 class="category-title">Chocolates</h2>
+            <div class="flavors-grid">
+                <div class="flavor-card" data-name="chocolate">
+                    <div class="card-header"><span class="flavor-name">Chocolate</span><span class="stars-container">★★★</span></div>
+                    <p class="flavor-desc">A Base de leche, azúcar, crema, cacao, y cobertura de chocolate.</p>
+                </div>
+                <div class="flavor-card" data-name="chocolate almendrado">
+                    <div class="card-header"><span class="flavor-name">Chocolate Almendrado</span><span class="stars-container">★★★</span></div>
+                    <p class="flavor-desc">Crema de chocolate sembrado con almendras enteras tostadas.</p>
+                </div>
+                <div class="flavor-card" data-name="kindehelado kinder">
+                    <div class="card-header"><span class="flavor-name">Kindehelado</span><span class="stars-container">★★★</span></div>
+                    <p class="flavor-desc">Base mixta (2 colores) de chocolate con leche y chocolate blanco, sembrado con pedacitos de huevo de chocolate.</p>
+                </div>
+                <div class="flavor-card" data-name="chocolate dubai pistacho">
+                    <div class="card-header"><span class="flavor-name">Chocolate Dubai</span><span class="stars-container">★★★</span></div>
+                    <p class="flavor-desc">Combinación de chocolates seleccionados sembrado con pasta de pistacho tostados y Kadayif.</p>
+                    <span class="badge-new">NUEVO</span>
+                </div>
+                <div class="flavor-card" data-name="chocolate suizo">
+                    <div class="card-header"><span class="flavor-name">Chocolate Suizo</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Base de chocolate sembrado con dulce de leche repostero y trozos de chocolate semi amargo.</p>
+                </div>
+                <div class="flavor-card" data-name="chocolate amargo 70">
+                    <div class="card-header"><span class="flavor-name">Chocolate Amargo al 70%</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Preparado con una selección de las más finas coberturas y cacaos.</p>
+                </div>
+                <div class="flavor-card" data-name="chocolate marroc">
+                    <div class="card-header"><span class="flavor-name">Chocolate Marroc</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Base de chocolate suave con sabor marroc sembrada con bocaditos.</p>
+                </div>
+                <div class="flavor-card" data-name="chocolate rocher ferrero">
+                    <div class="card-header"><span class="flavor-name">Chocolate Rocher</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Chocolate suave variegatto de avellanas y chocolate.</p>
+                </div>
+                <div class="flavor-card" data-name="chocolate blanco">
+                    <div class="card-header"><span class="flavor-name">Chocolate Blanco</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Base de americana con manteca de cacao y cobertura de chocolate blanco granizado con trozos de chocolate blanco.</p>
+                </div>
+                <div class="flavor-card" data-name="chocolate con pasas al rhum">
+                    <div class="card-header"><span class="flavor-name">Chocolate con Pasas al Rhum</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Base de chocolate sembrado con pasas de uva al rhum.</p>
+                </div>
+                <div class="flavor-card" data-name="chocolate schietto">
+                    <div class="card-header"><span class="flavor-name">Chocolate "Schietto"</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Chocolate sembrado con dulce de leche familiar y bombones de chocolate blanco rellenos con DDL.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- DULCE DE LECHE -->
+        <section class="category-section" data-category="dulcedeleche">
+            <h2 class="category-title">Dulce de Leche</h2>
+            <div class="flavors-grid">
+                <div class="flavor-card" data-name="dulce de leche">
+                    <div class="card-header"><span class="flavor-name">Dulce de Leche</span><span class="stars-container">★★★</span></div>
+                    <p class="flavor-desc">Leche, azúcar, crema y dulce de leche especial para helados.</p>
+                </div>
+                <div class="flavor-card" data-name="dulce de leche granizado">
+                    <div class="card-header"><span class="flavor-name">Dulce de Leche Granizado</span><span class="stars-container">★★★</span></div>
+                    <p class="flavor-desc">Helado de dulce de leche granizado con chocolate líquido.</p>
+                </div>
+                <div class="flavor-card" data-name="super dulce de leche">
+                    <div class="card-header"><span class="flavor-name">Super Dulce de Leche</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Helado de dulce de leche sembrado con dulce de leche familiar.</p>
+                </div>
+                <div class="flavor-card" data-name="dulce bombon">
+                    <div class="card-header"><span class="flavor-name">Dulce Bombón</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Helado de dulce de leche c/ bombones de chocolates rellenos con DDL.</p>
+                </div>
+                <div class="flavor-card" data-name="chocotorta chocolinas">
+                    <div class="card-header"><span class="flavor-name">Chocotorta</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Dulce de leche suave con queso crema sembrado con DDL familiar y chocolinas.</p>
+                </div>
+                <div class="flavor-card" data-name="dulce cookies oreo">
+                    <div class="card-header"><span class="flavor-name">Dulce Cookies</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Helado de dulce de leche sembrado con dulce de leche y galletitas Oreo molidas.</p>
+                    <span class="badge-new">NUEVO</span>
+                </div>
+                <div class="flavor-card" data-name="nutedull nutella">
+                    <div class="card-header"><span class="flavor-name">Nutedull</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Helado de dulce de leche sembrado con DDL familiar, pasta de avellanas y chocolate (Nutella).</p>
+                </div>
+                <div class="flavor-card" data-name="dulce de leche con nuez">
+                    <div class="card-header"><span class="flavor-name">Dulce de Leche con Nuez</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Helado de dulce de leche sembrada con nueces tostadas picadas.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FRUTALES -->
+        <section class="category-section" data-category="frutales">
+            <h2 class="category-title">Frutales (Base agua)</h2>
+            <div class="flavors-grid">
+                <div class="flavor-card" data-name="frutilla al natural">
+                    <div class="card-header"><span class="flavor-name">Frutilla al Natural</span><span class="stars-container">★★★</span></div>
+                    <p class="flavor-desc">Helado basado en agua, azúcar, y frutillas licuadas.</p>
+                </div>
+                <div class="flavor-card" data-name="limon">
+                    <div class="card-header"><span class="flavor-name">Limón</span><span class="stars-container">★★★</span></div>
+                    <p class="flavor-desc">Helado basado en agua, azúcar, jugo de limón y pulpa de limón.</p>
+                </div>
+                <div class="flavor-card" data-name="anana">
+                    <div class="card-header"><span class="flavor-name">Ananá</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Helado basado en agua, azúcar, pulpa natural de ananá y trocitos de ananá.</p>
+                </div>
+                <div class="flavor-card" data-name="durazno">
+                    <div class="card-header"><span class="flavor-name">Durazno</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Helado basado en agua, azúcar, pulpa de durazno y trocitos de durazno al natural.</p>
+                </div>
+                <div class="flavor-card" data-name="frambuesa">
+                    <div class="card-header"><span class="flavor-name">Frambuesa</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Helado basado en agua, azúcar, y frambuesas frescas.</p>
+                </div>
+                <div class="flavor-card" data-name="melon">
+                    <div class="card-header"><span class="flavor-name">Melón</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Helado basado en agua, azúcar, pulpa de melón procesada.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MOUSSES -->
+        <section class="category-section" data-category="mousses">
+            <h2 class="category-title">Mousses a la Crema</h2>
+            <div class="flavors-grid">
+                <div class="flavor-card" data-name="mousse de limon">
+                    <div class="card-header"><span class="flavor-name">Mousse de Limón</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Leche, crema, azúcar, clara de huevo y jugo natural de limón.</p>
+                </div>
+                <div class="flavor-card" data-name="mousse de chocolate">
+                    <div class="card-header"><span class="flavor-name">Mousse de Chocolate</span><span class="stars-container">★★</span></div>
+                    <p class="flavor-desc">Leche, crema, azúcar, cacao, cobertura de chocolate y claras de huevo.</p>
+                </div>
+                <div class="flavor-card" data-name="lemon pie con frutillas">
+                    <div class="card-header"><span class="flavor-name">Lemon Pie c/ Frutillas</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Crema de mousse de limón sembrada con pulpa de frutilla.</p>
+                </div>
+                <div class="flavor-card" data-name="mousse de maracuya">
+                    <div class="card-header"><span class="flavor-name">Mousse de Maracuyá</span><span class="stars-container">★</span></div>
+                    <p class="flavor-desc">Leche, crema, azúcar, pulpa y variegatto de Maracuyá.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p><strong>ARUS INTERNACIONAL S.A.</strong></p>
+        <p>Planta de Elaboración & Venta Directa: Bermudez 4474, Munro – Vicente López</p>
+        <p>Teléfonos: 011 4756 1399 / 4048</p>
+        <p class="cert-info">Gestión de la Calidad Certificada RI-9000-5987 (IRAM - IQNet)</p>
+    </footer>
+
+    <script>
+        function filterFlavors() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.flavor-card');
+            const sections = document.querySelectorAll('.category-section');
+
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name');
+                const desc = card.querySelector('.flavor-desc').innerText.toLowerCase();
+                
+                if (name.includes(query) || desc.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Ocultar categorías vacías durante búsqueda
+            sections.forEach(section => {
+                const visibleCards = section.querySelectorAll('.flavor-card[style="display: flex;"]');
+                if (visibleCards.length === 0 && query !== "") {
+                    section.style.display = 'none';
+                } else {
+                    section.style.display = 'block';
+                }
+            });
+        }
+
+        function filterCategory(category) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const sections = document.querySelectorAll('.category-section');
+            sections.forEach(section => {
+                if (category === 'all' || section.getAttribute('data-category') === category) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
